@@ -1,0 +1,75 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2513
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;\f1\fnil\fcharset0 AppleColorEmoji;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\margl1440\margr1440\vieww10800\viewh8400\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 <!DOCTYPE html>\
+<html lang="en">\
+<head>\
+<meta charset="UTF-8">\
+<meta name="viewport" content="width=device-width, initial-scale=1.0">\
+<title>Wellness Dashboard</title>\
+<link rel="stylesheet" href="style.css">\
+</head>\
+<body>\
+<div class="theme-toggle">\
+  <button onclick="setTheme('pink')">Pink</button>\
+</div>\
+\
+<div class="container">\
+  <!-- Water Section -->\
+  <div class="section" id="waterSection">\
+    <h1>
+\f1 \uc0\u55357 \u56487 
+\f0  Water</h1>\
+    <svg>\
+      <rect x="10" y="10" width="80" height="100" fill="#cce7ff"/>\
+      <rect id="waterFill" x="10" y="100" width="80" height="0" fill="#4da6ff" class="fill"/>\
+    </svg>\
+    <div id="waterTotal">0 oz</div>\
+    <div id="waterPercent">0%</div>\
+    <button onclick="addWater(1)">+1 oz</button>\
+    <button onclick="removeWater(1)">-1 oz</button>\
+  </div>\
+\
+  <!-- Protein Section -->\
+  <div class="section" id="proteinSection">\
+    <h1>
+\f1 \uc0\u55356 \u57175 
+\f0  Protein</h1>\
+    <div class="icon-container">\
+      <span id="chicken" class="chicken">
+\f1 \uc0\u55357 \u56340 
+\f0 </span>\
+    </div>\
+    <div id="proteinTotal">0 g</div>\
+    <div id="proteinPercent">0%</div>\
+    <input type="number" id="proteinInput" placeholder="g">\
+    <button onclick="addProtein()">Add Protein</button>\
+  </div>\
+\
+  <!-- Fiber Section -->\
+  <div class="section" id="fiberSection">\
+    <h1>\uc0\u55358 \u57048  Fiber</h1>\
+    <div class="bean-container">\
+      <span class="bean">\uc0\u55358 \u57048 </span>\
+      <span class="bean">\uc0\u55358 \u57048 </span>\
+      <span class="bean">\uc0\u55358 \u57048 </span>\
+      <span class="bean">\uc0\u55358 \u57048 </span>\
+      <span class="bean">\uc0\u55358 \u57048 </span>\
+      <span class="bean">\uc0\u55358 \u57048 </span>\
+      <span class="bean">\uc0\u55358 \u57048 </span>\
+      <span class="bean">\uc0\u55358 \u57048 </span>\
+      <span class="bean">\uc0\u55358 \u57048 </span>\
+      <span class="bean">\uc0\u55358 \u57048 </span>\
+    </div>\
+    <input type="number" id="fiberInput" placeholder="g">\
+    <button onclick="addFiber()">Add Fiber</button>\
+  </div>\
+</div>\
+\
+<script src="script.js"></script>\
+</body>\
+</html>}
