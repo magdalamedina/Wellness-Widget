@@ -1,0 +1,258 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2513
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fnil\fcharset0 HelveticaNeue;\f1\fnil\fcharset0 AppleColorEmoji;\f2\fnil\fcharset0 LucidaGrande;
+\f3\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\margl1440\margr1440\vieww10800\viewh8400\viewkind0
+\deftab560
+\pard\pardeftab560\slleading20\partightenfactor0
+
+\f0\fs24 \cf0 <!DOCTYPE html>\
+<html>\
+<head>\
+<meta name="viewport" content="width=device-width, initial-scale=1.0">\
+<title>Wellness Widget</title>\
+<style>\
+body \{\
+  font-family:-apple-system,BlinkMacSystemFont,sans-serif;\
+  margin:0;\
+  overflow:hidden;\
+\}\
+.container \{\
+  height:100vh;\
+  width:100vw;\
+  overflow-y: scroll;\
+  scroll-snap-type: y mandatory;\
+  scroll-behavior: smooth;\
+\}\
+.section \{\
+  height:100vh;\
+  scroll-snap-align: start;\
+  display:flex;\
+  flex-direction:column;\
+  justify-content:center;\
+  align-items:center;\
+  text-align:center;\
+  background:#fff0f6;\
+  transition:0.3s;\
+  position:relative;\
+\}\
+.theme-pink \{ background:#fff0f6; color:#6b2c4f; \}\
+.theme-lavender \{ background:#f3f0ff; color:#4b3f72; \}\
+.theme-blue \{ background:#eef6ff; color:#1f3c88; \}\
+.theme-toggle \{\
+  position:fixed;\
+  top:15px;\
+  right:15px;\
+  z-index:100;\
+\}\
+.theme-toggle button \{\
+  padding:6px 10px;\
+  margin:2px;\
+  font-size:12px;\
+  border:none;\
+  border-radius:10px;\
+  background:#ff8fab;\
+  color:white;\
+\}\
+\
+/* SWIPE ARROWS */\
+.arrow \{\
+  position:absolute;\
+  font-size:24px;\
+  color:rgba(0,0,0,0.3);\
+  animation: blink 1s infinite alternate;\
+\}\
+.arrow.up \{ top:10px; \}\
+.arrow.down \{ bottom:10px; \}\
+@keyframes blink \{ 0%\{opacity:0.3;\} 100%\{opacity:1;\} \}\
+\
+/* ICONS */\
+.icon-container \{\
+  position:relative;\
+  width:110px;\
+  height:110px;\
+  margin:20px auto;\
+\}\
+.icon-label \{\
+  position:absolute;\
+  top:50%;\
+  left:50%;\
+  transform:translate(-50%,-50%);\
+  font-weight:bold;\
+\}\
+\
+/* LIVE CHICKEN */\
+.chicken \{ font-size:60px; color:#999; transition:0.4s ease; filter: grayscale(100%);\}\
+.chicken.active \{ animation: bob 0.6s ease infinite; \}\
+@keyframes bob \{ 0%\{transform:translateY(0);\}50%\{transform:translateY(-6px);\}100%\{transform:translateY(0);\} \}\
+\
+/* BEANS */\
+.bean-container \{ display:flex; justify-content:center; flex-wrap:wrap; gap:8px; margin:10px 0; \}\
+.bean \{ font-size:28px; color:#999; opacity:0.5; transition:0.4s ease, transform 0.3s ease; \}\
+.bean.filled \{ color:#7a4f2b; opacity:1; transform:scale(1.1); animation:jiggle 0.4s ease; \}\
+@keyframes jiggle \{0%\{transform:scale(1);\}50%\{transform:scale(1.2);\}100%\{transform:scale(1.1);\}\}\
+\
+/* WATER DROPLET */\
+svg \{ width:110px; height:110px; \}\
+.fill \{ transition:0.4s ease; \}\
+@keyframes ripple \{0%\{transform: scale(1);\}50%\{transform: scale(1.05);\}100%\{transform: scale(1);\}\}\
+\
+/* BUTTONS & INPUTS */\
+button \{ padding:8px 12px; margin:5px; border:none; border-radius:12px; background:#ff8fab; color:white; font-size:14px; \}\
+input \{ padding:6px; width:80px; border-radius:10px; border:1px solid #ccc; text-align:center; \}\
+</style>\
+</head>\
+\
+<body class="theme-pink">\
+<div class="theme-toggle">\
+  <button onclick="setTheme('pink')">
+\f1 \uc0\u55356 \u57144 
+\f0 </button>\
+  <button onclick="setTheme('lavender')">
+\f1 \uc0\u55357 \u56476 
+\f0 </button>\
+  <button onclick="setTheme('blue')">
+\f1 \uc0\u55357 \u56473 
+\f0 </button>\
+</div>\
+\
+<div class="container">\
+\
+  <!-- WATER -->\
+  <div class="section" id="waterSection">\
+    <div class="arrow up">
+\f2 \uc0\u8593 
+\f0 </div>\
+    <div class="arrow down">
+\f2 \uc0\u8595 
+\f0 </div>\
+    <h1>
+\f1 \uc0\u55357 \u56487 
+\f0  Water (64oz)</h1>\
+    <div id="waterTotal">0 oz</div>\
+    <div class="icon-container" id="waterIcon">\
+      <svg viewBox="0 0 100 100">\
+        <path d="M50 5 C20 40,20 60,50 95 C80 60,80 40,50 5 Z" fill="#ddd"/>\
+        <clipPath id="waterClip"><rect id="waterFill" x="0" y="100" width="100" height="0"/></clipPath>\
+        <path d="M50 5 C20 40,20 60,50 95 C80 60,80 40,50 5 Z" fill="#4da6ff" clip-path="url(#waterClip)"/>\
+      </svg>\
+      <div class="icon-label" id="waterPercent">0%</div>\
+    </div>\
+    <button onclick="addWater(8)">+8</button>\
+    <button onclick="addWater(16)">+16</button>\
+    <button onclick="removeWater(8)">
+\f1 \uc0\u10134 
+\f0 8</button>\
+  </div>\
+\
+  <!-- PROTEIN -->\
+  <div class="section" id="proteinSection">\
+    <div class="arrow up">
+\f2 \uc0\u8593 
+\f0 </div>\
+    <div class="arrow down">
+\f2 \uc0\u8595 
+\f0 </div>\
+    <h1>
+\f1 \uc0\u55356 \u57175 
+\f0  Protein (85g)</h1>\
+    <div id="proteinTotal">0 g</div>\
+    <div id="chicken" class="chicken">
+\f1 \uc0\u55357 \u56340 
+\f0 </div>\
+    <br>\
+    <input type="number" id="proteinInput">\
+    <button onclick="addProtein()">Add</button>\
+    <div id="proteinPercent"></div>\
+  </div>\
+\
+  <!-- FIBER -->\
+  <div class="section" id="fiberSection">\
+    <div class="arrow up">
+\f2 \uc0\u8593 
+\f0 </div>\
+    <div class="arrow down">
+\f2 \uc0\u8595 
+\f0 </div>\
+    <h1>
+\f3 \uc0\u55358 \u57048 
+\f0  Fiber (30g)</h1>\
+    <div id="fiberTotal">0 g</div>\
+    <div id="beans" class="bean-container"></div>\
+    <input type="number" id="fiberInput">\
+    <button onclick="addFiber()">Add</button>\
+  </div>\
+\
+</div>\
+\
+<script>\
+// GOALS\
+const waterGoal=64;\
+const proteinGoal=85;\
+const fiberGoal=30;\
+\
+// STORAGE\
+let water=parseInt(localStorage.getItem("water"))||0;\
+let protein=parseInt(localStorage.getItem("protein"))||0;\
+let fiber=parseInt(localStorage.getItem("fiber"))||0;\
+\
+// CREATE MULTIPLE BEANS\
+const beanContainer=document.getElementById("beans");\
+for(let i=0;i<10;i++)\{\
+  const b=document.createElement("div");\
+  b.className="bean";\
+  b.innerText="
+\f3 \uc0\u55358 \u57048 
+\f0 ";\
+  beanContainer.appendChild(b);\
+\}\
+\
+// UPDATE FUNCTION\
+function update()\{\
+  // WATER\
+  document.getElementById("waterTotal").innerText=water+" oz";\
+  let wp=Math.min((water/waterGoal)*100,100);\
+  document.getElementById("waterPercent").innerText=Math.round(wp)+"%";\
+  document.getElementById("waterFill").setAttribute("y",100-wp);\
+  document.getElementById("waterFill").setAttribute("height",wp);\
+  if(document.getElementById('waterSection').getBoundingClientRect().top===0)\{\
+    document.getElementById("waterIcon").style.animation="ripple 0.6s ease";\
+  \}\
+\
+  // PROTEIN\
+  document.getElementById("proteinTotal").innerText=protein+" g";\
+  let pp=Math.min((protein/proteinGoal)*100,100);\
+  document.getElementById("proteinPercent").innerText=Math.round(pp)+"%";\
+  const chicken=document.getElementById("chicken");\
+  chicken.style.filter="grayscale("+(100-pp)+"%)";\
+  if(document.getElementById('proteinSection').getBoundingClientRect().top===0)\{\
+    chicken.classList.add("active");\
+  \} else \{ chicken.classList.remove("active"); \}\
+\
+  // FIBER\
+  document.getElementById("fiberTotal").innerText=fiber+" g";\
+  let filledBeans=Math.floor((fiber/fiberGoal)*10);\
+  document.querySelectorAll(".bean").forEach((bean,index)=>\{\
+    if(index<filledBeans) bean.classList.add("filled");\
+    else bean.classList.remove("filled");\
+  \});\
+\}\
+\
+// BUTTONS\
+function addWater(a)\{ water+=a; localStorage.setItem("water",water); update(); \}\
+function removeWater(a)\{ water=Math.max(0,water-a); localStorage.setItem("water",water); update(); \}\
+function addProtein()\{ let v=parseInt(proteinInput.value); if(v)\{ protein+=v; proteinInput.value=""; localStorage.setItem("protein",protein); update(); proteinInput.focus(); \}\}\
+function addFiber()\{ let v=parseInt(fiberInput.value); if(v)\{ fiber+=v; fiberInput.value=""; localStorage.setItem("fiber",fiber); update(); fiberInput.focus(); \}\}\
+\
+// THEME\
+function setTheme(t)\{ document.body.className="theme-"+t; localStorage.setItem("theme",t); \}\
+if(localStorage.getItem("theme")) setTheme(localStorage.getItem("theme"));\
+\
+// SWIPE SCROLL DETECTION\
+document.querySelector('.container').addEventListener('scroll', update);\
+update();\
+</script>\
+</body>\
+</html>\
+}
